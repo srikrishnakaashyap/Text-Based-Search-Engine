@@ -59,6 +59,6 @@ class AppService:
 
 
 if __name__ == "__main__":
-    ise = IndexService()
+    ise = AppService()
 
     ise.isIndexed()
