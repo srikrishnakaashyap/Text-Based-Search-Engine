@@ -17,6 +17,6 @@ with app.app_context():
     CORS(app)
     RegisterBlueprints(app)
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
-    app.run(host = "0.0.0.0", port=5002,)
+    app.run(host="0.0.0.0", port=5002,)
 
     print("...Default Web Mode Completed")

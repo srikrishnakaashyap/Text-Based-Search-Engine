@@ -7,7 +7,7 @@ from services.app_service import AppService
 search_blueprint = Blueprint('search', __name__, template_folder="templates")
 
 
-@search_blueprint.route('/', methods=['GET', ])
+@search_blueprint.route('/', methods=['GET', 'POST'])
 def home():
 
     AppService().isIndexed()
