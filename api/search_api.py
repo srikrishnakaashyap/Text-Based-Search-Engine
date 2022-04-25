@@ -10,6 +10,6 @@ search_blueprint = Blueprint('search', __name__, template_folder="templates")
 @search_blueprint.route('/', methods=['GET', 'POST'])
 def home():
 
-    AppService().isIndexed()
+    AppService().indexFiles()
 
     return render_template("search.html")
