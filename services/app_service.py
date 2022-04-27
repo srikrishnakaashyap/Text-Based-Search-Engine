@@ -5,6 +5,8 @@ import os
 from constants.global_constants import GC
 import json
 import spacy
+
+from services.response_service import ResponseService
 spacy.prefer_gpu()
 
 
@@ -41,12 +43,12 @@ class AppService:
     def indexFiles(self):
 
         indexDictionary = {}
-        lemmatizer = spacy.load("en_core_web_sm", disable=['parser', 'ner'])
+        # lemmatizer = spacy.load("en_core_web_sm", disable=['parser', 'ner'])
 
         files_list = self.getFilesInDirectory(
             os.path.join(os.getcwd(), GC.DATASET_FOLDER))
 
-        print(files_list)
+        # print(files_list)
 
         self.removeIgnoredFiles(files_list)
 
@@ -70,7 +72,7 @@ class AppService:
                     if not line:
                         continue
 
-                    lemmatized_line = lemmatizer(line)
+                    lemmatized_line = GC.SPACYLEMMATIZER(line)
                     for words in lemmatized_line:
                         if words.lemma_ not in indexDictionary["index"]:
                             d = {}
@@ -109,12 +111,20 @@ class AppService:
 
     def searchWord(self, word):
 
-        if not GC.INDEXEDWORDS and self.isIndexed == True:
-
+        if not GC.INDEXEDWORDS and not self.isIndexed():
             self.isIndexed()
             self.searchWord(word)
 
-        return GC.INDEXEDWORDS['index'][word]
+        if word not in GC.INDEXEDWORDS["index"]:
+            # Perform Binary Search and Return the closest
+            print("NOT IN THE DICT")
+            closest_word = self.binarySearch(word)
+
+            return ResponseService().create_response(closest_word)
+        return ResponseService().create_response(word)
+
+    def binarySearch(word):
+        pass
 
     @staticmethod
     def getFilesInDirectory(path):

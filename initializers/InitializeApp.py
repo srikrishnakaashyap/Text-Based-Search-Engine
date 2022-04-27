@@ -2,6 +2,8 @@ from constants.global_constants import GC
 import os
 import json
 
+from services.app_service import AppService
+
 
 class InitializeApp:
 
@@ -21,6 +23,10 @@ class InitializeApp:
             try:
                 index_file = json.load(idxfile)
             except:
-                print("Index File is Blank or of wrong format")
-            print(index_file, type(index_file))
+                print("Index File is Blank or of wrong format, Trying to index it")
+                if AppService().isIndexed():
+                    print("Indexed Successfully")
+                else:
+                    print("Cant Index")
+            # print(index_file, type(index_file))
             return index_file
