@@ -16,13 +16,11 @@ def home():
 
         return render_template("search.html")
     else:
-        searchWord = request.form.get('search', None)
+        requestWord = request.form.get('search', None)
 
-        # lemmatizer = GC.SPACYLEMMATIZER.vocab.morphology.Lemmatizer
+        lemmatizedObject = GC.SPACYLEMMATIZER(requestWord)
 
-        # searchWord = lemmatizer(searchWord)
-
-        print(searchWord)
+        searchWord = lemmatizedObject[0].lemma_
 
         if not searchWord:
             return render_template("search.html", response="Enter a search word")
