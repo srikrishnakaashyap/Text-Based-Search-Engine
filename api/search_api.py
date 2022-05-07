@@ -2,6 +2,7 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from constants.global_constants import GC
 import spacy
 from services.app_service import AppService
+import json
 
 
 search_blueprint = Blueprint('search', __name__, template_folder="templates")
@@ -11,7 +12,9 @@ search_blueprint = Blueprint('search', __name__, template_folder="templates")
 def home():
     if request.method == 'GET':
 
-        return render_template("search.html", response=None)
+        response = {"files": {}, "searchResults": {}}
+
+        return render_template("search.html", response=json.dumps(response))
     else:
         requestWord = request.form.get('search', None)
 

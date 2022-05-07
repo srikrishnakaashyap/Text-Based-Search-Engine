@@ -13,7 +13,7 @@ class ResponseService:
 
         response["searchResults"] = {}
 
-        return response
+        return jsonify(response)
 
     @staticmethod
     def create_response(word):
@@ -25,4 +25,4 @@ class ResponseService:
         # Sort searchResults based on the lenth of the occurrence list
         response["searchResults"] = GC.INDEXEDWORDS["index"][word]
 
-        return response
+        return json.dumps(response)

@@ -22,14 +22,9 @@
 
 	function fillResponse() {
 
-
 		console.log("FILLING PAGE");
+		const responseJson = JSON.parse({{ response| tojson}});
 
-		console.log("{{response}}");
-
-		let response = JSON.parse("{{response}}")
-
-		console.log(response)
 	}
 
 
