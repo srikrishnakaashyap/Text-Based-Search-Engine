@@ -30,7 +30,7 @@ spacy-legacy==3.0.9
 spacy-loggers==1.0.2
 srsly==2.4.3
 thinc==8.0.15
-thinc-apple-ops==0.0.5
+# thinc-apple-ops==0.0.5
 toml==0.10.2
 tqdm==4.64.0
 typer==0.4.1
