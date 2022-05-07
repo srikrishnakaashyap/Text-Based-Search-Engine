@@ -2,6 +2,7 @@ from operator import index
 from os import listdir
 from os.path import isfile, join
 import os
+from langcodes import closest_match
 from constants.global_constants import GC
 import json
 import spacy
@@ -91,6 +92,7 @@ class AppService:
                             indexDictionary["index"][words.lemma_] = d
 
         GC.INDEXEDWORDS = indexDictionary
+        self.computeSortedWordList()
         self.writeToFile()
 
     # Given a word, Return the words Occurrences
@@ -109,22 +111,56 @@ class AppService:
 
             idxfile.close()
 
-    def searchWord(self, word):
+    def searchWord(self, word, first=True):
 
-        if not GC.INDEXEDWORDS and not self.isIndexed():
+        if first and not GC.INDEXEDWORDS and not self.isIndexed():
             self.isIndexed()
-            self.searchWord(word)
+            return self.searchWord(word, False)
 
         if word not in GC.INDEXEDWORDS["index"]:
             # Perform Binary Search and Return the closest
             print("NOT IN THE DICT")
-            closest_word = self.binarySearch(word)
+            closest_word = self.searchClosestWord(word)
+
+            print("CLOSEST WORD", closest_word)
 
             return ResponseService().create_response(closest_word)
+
+        if not first and not GC.INDEXEDWORDS and not self.isIndexed():
+            return ResponseService().create_empty_response()
+
         return ResponseService().create_response(word)
 
-    def binarySearch(word):
-        pass
+    def searchClosestWord(self, word, first=True):
+        if not GC.SORTEDWORDLIST:
+            self.computeSortedWordList()
+            return self.searchClosestWord(word, False)
+
+        if not first and not GC.SORTEDWORDLIST:
+            return ResponseService().create_empty_response()
+
+        low = 0
+
+        high = len(GC.SORTEDWORDLIST) - 1
+
+        closest_word = self.binarySearch(low, high, word)
+
+        return closest_word
+
+    @staticmethod
+    def binarySearch(low, high, word):
+        mid = -1
+        while(low < high):
+            mid = (low + high)//2
+            midpoint = GC.SORTEDWORDLIST[mid]
+            if midpoint > word:
+                high = mid - 1
+            elif midpoint < word:
+                low = mid + 1
+            else:
+                break
+
+        return GC.SORTEDWORDLIST[mid]
 
     @staticmethod
     def getFilesInDirectory(path):
@@ -132,13 +168,17 @@ class AppService:
         return onlyfiles
 
     @staticmethod
+    def computeSortedWordList():
+        if GC.INDEXEDWORDS:
+            index = list(sorted(GC.INDEXEDWORDS["index"].keys()))
+            GC.SORTEDWORDLIST = index
+
+    @staticmethod
     def removeIgnoredFiles(listOfFiles):
         for file in listOfFiles:
             print(file, file.split(".")[-1])
             if file.split(".")[-1] in GC.DATASET_DIRECTORY_IGNORE_LIST:
-                # print(file)
                 listOfFiles.remove(file)
-        # print(listOfFiles)
 
     # Array 1 -> Freshly Computed File List
     # Array 2 -> Existing File List

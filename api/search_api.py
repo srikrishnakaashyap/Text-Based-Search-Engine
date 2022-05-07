@@ -1,10 +1,7 @@
 from flask import Blueprint, request, redirect, url_for, render_template
-# from flask_login import login_required, current_user
 from constants.global_constants import GC
 import spacy
 from services.app_service import AppService
-# from constants.app_constants import GC
-# from spacy.lemmatizer import Lemmatizer, ADJ, NOUN, VERB
 
 
 search_blueprint = Blueprint('search', __name__, template_folder="templates")
@@ -21,6 +18,8 @@ def home():
         lemmatizedObject = GC.SPACYLEMMATIZER(requestWord)
 
         searchWord = lemmatizedObject[0].lemma_
+
+        print("SEARCHING FOR", searchWord)
 
         if not searchWord:
             return render_template("search.html", response="Enter a search word")

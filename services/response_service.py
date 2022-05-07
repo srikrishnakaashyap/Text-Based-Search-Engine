@@ -4,6 +4,16 @@ from constants.global_constants import GC
 class ResponseService:
 
     @staticmethod
+    def create_empty_response():
+        response = {}
+
+        response["files"] = {}
+
+        response["searchResults"] = {}
+
+        return response
+
+    @staticmethod
     def create_response(word):
 
         response = {}
