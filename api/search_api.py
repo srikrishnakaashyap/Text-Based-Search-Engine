@@ -11,9 +11,11 @@ search_blueprint = Blueprint('search', __name__, template_folder="templates")
 def home():
     if request.method == 'GET':
 
-        return render_template("search.html")
+        return render_template("search.html", response=None)
     else:
         requestWord = request.form.get('search', None)
+
+        print("REQUESTING FOR", requestWord)
 
         lemmatizedObject = GC.SPACYLEMMATIZER(requestWord)
 
