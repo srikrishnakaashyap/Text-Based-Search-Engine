@@ -19,6 +19,6 @@ with app.app_context():
     RegisterBlueprints(app)
     InitializeApp()
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    app.run(debug=True)
 
     print("...Default Web Mode Completed")
