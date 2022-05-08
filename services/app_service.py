@@ -124,7 +124,7 @@ class AppService:
 
             print("CLOSEST WORD", closest_word)
 
-            return ResponseService().create_response(closest_word)
+            return ResponseService().create_response(closest_word, 0)
 
         if not first and not GC.INDEXEDWORDS and not self.isIndexed():
             return ResponseService().create_empty_response()

@@ -2,6 +2,7 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from constants.global_constants import GC
 import spacy
 from services.app_service import AppService
+from services.response_service import ResponseService
 import json
 
 
@@ -16,7 +17,16 @@ def home():
 
         return render_template("search.html", response=json.dumps(response))
     else:
-        requestWord = request.form.get('search', None)
+
+        print("REQUEST", request.data)
+        requestObject = request.data.decode("utf-8")
+
+        requestWord = json.loads(requestObject).get('search', None)
+
+        if not requestWord:
+            response = ResponseService().create_empty_response()
+
+            return response
 
         print("REQUESTING FOR", requestWord)
 
@@ -26,11 +36,6 @@ def home():
 
         print("SEARCHING FOR", searchWord)
 
-        if not searchWord:
-            return render_template("search.html", response="Enter a search word")
-
         response = AppService().searchWord(searchWord)
 
-        print(response)
-
-        return render_template("search.html", response=response)
+        return json.dumps(response)
