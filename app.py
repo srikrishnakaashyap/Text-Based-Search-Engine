@@ -4,6 +4,7 @@ from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 from initializers.InitializeApp import InitializeApp
 from initializers.register_all_blueprints import RegisterBlueprints
+import os
 # from initializers.register_all_blueprints import RegisterBlueprints
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ with app.app_context():
     RegisterBlueprints(app)
     InitializeApp()
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
 
     print("...Default Web Mode Completed")
