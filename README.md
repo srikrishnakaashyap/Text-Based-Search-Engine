@@ -42,16 +42,51 @@ The following is the list of algorithms/steps we would be using in this project.
 1.  Lemmatization
 2.  Indexing - Forward Indexing
 3.  Sorting - Insertion Sort
-4. Custom Ranking Algorithm to rank the searched items.
+4.  Custom Ranking Algorithm to rank the searched items.
 5.  Heaps
 6.  Heapify
 7.  Tries
 
 # Tech Stack Used
 
+1.  Python - Flask 
+2.  Java Script
+3.  HTML
+4.  CSS
+5.  JQuery
 
 # How to Run this Project
 
+1. Clone the repo
+   ```sh
+   git clone https://github.com/srikrishnakaashyap/Hack-On.git
+   ```
+   
+2. Create a virtual environment in the app using the command
+   ```
+   python3 -m virtualenv venv
+   ```
+   
+3. Activate the virtual environment using:
+   ```
+   source venv/bin/activate
+   ```
+   
+4. Install the PIP packages using the command:
+   ```
+   pip install -r requirements.txt
+   ```
+   
+5. Run the app in the virtual environment using the command:
+   ```
+   python app.py
+   ```
+
 # Demo
 
+The demo for the project is at https://www.youtube.com/watch?v=rspGtD4Bfrc 
+
 # Limitations
+
+We are tracking the addition of new files in the dataset. However, tracking the edits in the dataset is currently out of scope for this project. If a dataset is updated after the preprocessing steps, then we perform the preprocessing again and this step is performed explicitly by the user.
+
