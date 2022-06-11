@@ -3,11 +3,11 @@ from os import listdir
 from os.path import isfile, join
 import os
 from langcodes import closest_match
-from constants.global_constants import GC
+from app.constants.global_constants import GC
 import json
 import spacy
 
-from services.response_service import ResponseService
+from app.services.response_service import ResponseService
 spacy.prefer_gpu()
 
 

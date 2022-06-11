@@ -1,8 +1,8 @@
 from flask import Blueprint, request, redirect, url_for, render_template
-from constants.global_constants import GC
+from app.constants.global_constants import GC
 import spacy
-from services.app_service import AppService
-from services.response_service import ResponseService
+from app.services.app_service import AppService
+from app.services.response_service import ResponseService
 import json
 
 

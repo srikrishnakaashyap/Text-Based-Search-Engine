@@ -1,8 +1,8 @@
-from constants.global_constants import GC
+from app.constants.global_constants import GC
 import os
 import json
 
-from services.app_service import AppService
+from app.services.app_service import AppService
 
 
 class InitializeApp:
@@ -15,6 +15,8 @@ class InitializeApp:
 
         index_file_path = os.path.join(os.path.join(
             os.getcwd(), GC.DATASET_FOLDER), GC.JSON_FILE)
+
+        print(index_file_path)
 
         mode = 'r+' if os.path.exists(index_file_path) else 'w+'
 
